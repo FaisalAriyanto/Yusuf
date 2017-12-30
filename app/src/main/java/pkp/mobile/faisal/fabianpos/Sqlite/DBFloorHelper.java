@@ -18,10 +18,9 @@ public class DBFloorHelper extends DBBaseHelper {
         super(context);
     }
 
-    public void addQuestion(FloorModel floor) {
+    public void addFloor(FloorModel floor) {
         SQLiteDatabase db = openDb();
         ContentValues values = new ContentValues();
-        values.put(DBFloorHelper.KEY_FLOOR_ID, floor.getFloor_id());
         values.put(DBFloorHelper.KEY_NAME, floor.getName());
 
         // Inserting Row
@@ -47,6 +46,15 @@ public class DBFloorHelper extends DBBaseHelper {
         }
         return temp;
     }
+
+    public void update(FloorModel floorModel) {
+        SQLiteDatabase db = this.openDb();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_NAME, floorModel.getName());
+
+        db.update(TABLE_FLOOR, cv, KEY_FLOOR_ID + "= " + floorModel.getFloor_id(), null);
+    }
+
 
     public ArrayList<FloorModel> getAll() {
         ArrayList<FloorModel> temp = new ArrayList<>();

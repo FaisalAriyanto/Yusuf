@@ -13,6 +13,10 @@ public class FloorModel {
         this.name = name;
     }
 
+    public FloorModel(String name) {
+        this.name = name;
+    }
+
     public int getFloor_id() {
         return floor_id;
     }

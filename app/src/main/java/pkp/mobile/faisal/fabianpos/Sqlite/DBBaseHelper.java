@@ -33,7 +33,7 @@ public class DBBaseHelper {
 
     public static final String TABLE_FLOOR = "floors";
     public static final String CREATE_TABLE_FLOOR = "CREATE TABLE " + TABLE_FLOOR + "("
-            + KEY_FLOOR_ID + " INTEGER , "
+            + KEY_FLOOR_ID + " INTEGER PRIMARY KEY, "
             + KEY_NAME + " TEXT " + ")";
 
     //=====================END CREATE SQLITE===============================

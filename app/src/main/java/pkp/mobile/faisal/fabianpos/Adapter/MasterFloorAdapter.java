@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,12 +14,11 @@ import pkp.mobile.faisal.fabianpos.R;
 
 public class MasterFloorAdapter extends RecyclerView.Adapter<MasterFloorAdapter.DataObjectHolder> {
     private ArrayList<FloorModel> mDataSet;
+    private OnListItemClick onListClick;
 
-    public MasterFloorAdapter(ArrayList<FloorModel> myDataSet) {
+    public MasterFloorAdapter(ArrayList<FloorModel> myDataSet, OnListItemClick onListClick) {
         mDataSet = myDataSet;
-    }
-
-    public MasterFloorAdapter() {
+        this.onListClick = onListClick;
 
     }
 
@@ -30,8 +30,14 @@ public class MasterFloorAdapter extends RecyclerView.Adapter<MasterFloorAdapter.
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-        FloorModel penugasan = mDataSet.get(position);
+        final FloorModel penugasan = mDataSet.get(position);
         holder.mNama.setText(penugasan.getName());
+        holder.mRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onListClick.onListClick(penugasan);
+            }
+        });
     }
 
     @Override
@@ -44,12 +50,18 @@ public class MasterFloorAdapter extends RecyclerView.Adapter<MasterFloorAdapter.
 
         private ArrayList<FloorModel> mItemSet;
         private TextView mNama;
+        private LinearLayout mRoot;
 
 
         public DataObjectHolder(final View view) {
             super(view);
-            mNama = (TextView) view.findViewById(R.id.name);
+            mNama = view.findViewById(R.id.name);
+            mRoot = view.findViewById(R.id.root);
         }
     }
 
+
+    public interface OnListItemClick {
+        void onListClick(FloorModel floorModel);
+    }
 }

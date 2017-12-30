@@ -27,14 +27,14 @@ public class DBTableHelper extends DBBaseHelper {
         values.put(DBTableHelper.KEY_FLOOR_ID, question.getFloor_id());
 
         // Inserting Row
-        db.insert(DBTableHelper.TABLE_FLOOR, null, values);
+        db.insert(DBTableHelper.TABLE_TABLE, null, values);
         db.close(); // Closing database connection
     }
 
 
     public ArrayList<TableModel> getById(int id) {
         ArrayList<TableModel> temp = new ArrayList<TableModel>();
-        String selectQuery = "SELECT  * FROM " + DBBaseHelper.TABLE_FLOOR + " WHERE " + DBBaseHelper.KEY_IS_EMPTY + " = " + id;
+        String selectQuery = "SELECT  * FROM " + DBBaseHelper.TABLE_TABLE + " WHERE " + DBBaseHelper.KEY_IS_EMPTY + " = " + id;
         SQLiteDatabase db = this.openDb();
         Cursor c = db.rawQuery(selectQuery, null);
         if (c.moveToFirst()) {
@@ -54,7 +54,7 @@ public class DBTableHelper extends DBBaseHelper {
 
     public ArrayList<TableModel> getAll() {
         ArrayList<TableModel> temp = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + DBBaseHelper.TABLE_FLOOR;
+        String selectQuery = "SELECT  * FROM " + DBBaseHelper.TABLE_TABLE;
         SQLiteDatabase db = this.openDb();
         Cursor c = db.rawQuery(selectQuery, null);
         if (c.moveToFirst()) {
@@ -76,7 +76,7 @@ public class DBTableHelper extends DBBaseHelper {
     public void resetTables() {
         SQLiteDatabase db = openDb();
         // Delete All Rows
-        db.delete(DBBaseHelper.TABLE_FLOOR, null, null);
+        db.delete(DBBaseHelper.TABLE_TABLE, null, null);
         db.close();
     }
 }
