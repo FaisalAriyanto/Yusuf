@@ -18,72 +18,23 @@ public class DBBaseHelper {
 
 
     //=====================START CREATE SQLITE===============================
-    public static final String TABLE_TEMPLATE = "template";
-    public static final String KEY_TEMPLATE_ID = "template_id";
-    public static final String KEY_COMPANY_ID = "coyId";
-    public static final String KEY_QUESTION_ID = "question_id";
-    public static final String KEY_TEMPLATE_SORT = "template_sort";
-    public static final String KEY_IS_MANDATORY = "is_mandatory";
-    public static final String KEY_ISACTIVE = "is_active";
-    public static final String CREATE_TABLE_TEMPLATE = "CREATE TABLE " + TABLE_TEMPLATE + "("
-            + KEY_TEMPLATE_ID + " INTEGER PRIMARY KEY , "
-            + KEY_COMPANY_ID + " INTEGER , "
-            + KEY_QUESTION_ID + " INTEGER , "
-            + KEY_TEMPLATE_SORT + " INTEGER , "
-            + KEY_IS_MANDATORY + " TEXT ,"
-            + KEY_ISACTIVE + " TEXT " + ")";
-
-
-    public static final String TABLE_QUESTION = "question";
-    public static final String KEY_QUESTION_TEXT = "question_text";
-    public static final String KEY_DATATYPE_ID = "dataype_id";
-    public static final String CREATE_TABLE_QUESTION = "CREATE TABLE " + TABLE_QUESTION + "("
-            + KEY_QUESTION_ID + " INTEGER PRIMARY KEY , "
-            + KEY_QUESTION_TEXT + " TEXT  , "
-            + KEY_DATATYPE_ID + " INTEGER " + ")";
-
-
-    public static final String TABLE_COLLECTION = "collection";
-    public static final String KEY_COLLECTION_ID = "collection_id";
-    public static final String KEY_USER_ID = "user_id";
-    public static final String KEY_POSITION = "position";
-    public static final String KEY_ISAPPROVED = "is_approved";
-    public static final String KEY_CREATED_DATE = "created_date";
-    public static final String KEY_APPROVED_BY = "approved_by";
-    public static final String KEY_APPROVED_DATE = "approved_date";
-    public static final String KEY_IMAGE_ID = "image_id";
-    public static final String CREATE_TABLE_COLLECTION = "CREATE TABLE " + TABLE_COLLECTION + "("
-            + KEY_COLLECTION_ID + " INTEGER PRIMARY KEY, "
-            + KEY_USER_ID + " INTEGER  , "
-            + KEY_POSITION + " TEXT  , "
-            + KEY_ISAPPROVED + " TEXT , "
-            + KEY_CREATED_DATE + " DATETIME ,"
-            + KEY_APPROVED_BY + " TEXT ,"
-            + KEY_APPROVED_DATE + " DATETIME ,"
-            + KEY_IMAGE_ID + " INTEGER"
+    public static final String TABLE_TABLE = "tables";
+    public static final String KEY_TABLE_ID = "table_id";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_IS_EMPTY = "isempty";
+    public static final String KEY_FLOOR_ID = "floor_id";
+    public static final String CREATE_TABLE_TABLE = "CREATE TABLE " + TABLE_TABLE + "("
+            + KEY_TABLE_ID + " INTEGER PRIMARY KEY , "
+            + KEY_NAME + " TEXT , "
+            + KEY_IS_EMPTY + " TEXT , "
+            + KEY_FLOOR_ID + " INTEGER "
             + ")";
 
 
-    public static final String TABLE_DETAIL_COLECTION = "detail_collection";
-    public static final String KEY_DETAIL_COLLECTION_ID = "detail_collection_id";
-    public static final String KEY_ANSWER_TEXT = "answer_text";
-    public static final String CREATE_TABLE_DETAIL_COLLECTION = "CREATE TABLE " + TABLE_DETAIL_COLECTION + "("
-            + KEY_DETAIL_COLLECTION_ID + " INTEGER PRIMARY KEY, "
-            + KEY_COLLECTION_ID + " INTEGER  , "
-            + KEY_QUESTION_ID + " INTEGER  , "
-            + KEY_ANSWER_TEXT + " TEXT  ,"
-            + KEY_CREATED_DATE + " DATETIME, "
-            + KEY_QUESTION_TEXT + " TEXT "
-            + ")";
-
-    public static final String TABLE_SUMMARY = "summary";
-    public static final String KEY_WEEK = "week";
-    public static final String KEY_COLL_COUNT = "coll_count";
-
-    public static final String CREATE_TABLE_SUMMARY = "CREATE TABLE " + TABLE_SUMMARY + "("
-            + KEY_ID + " INTEGER PRIMARY KEY, "
-            + KEY_WEEK + " INTEGER , "
-            + KEY_COLL_COUNT + " INTEGER" + ")";
+    public static final String TABLE_FLOOR = "floors";
+    public static final String CREATE_TABLE_FLOOR = "CREATE TABLE " + TABLE_FLOOR + "("
+            + KEY_FLOOR_ID + " INTEGER , "
+            + KEY_NAME + " TEXT " + ")";
 
     //=====================END CREATE SQLITE===============================
 
@@ -111,20 +62,16 @@ public class DBBaseHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(CREATE_TABLE_TEMPLATE);
-            db.execSQL(CREATE_TABLE_QUESTION);
-            db.execSQL(CREATE_TABLE_DETAIL_COLLECTION);
-            db.execSQL(CREATE_TABLE_SUMMARY);
-            db.execSQL(CREATE_TABLE_COLLECTION);
+            db.execSQL(CREATE_TABLE_TABLE);
+            db.execSQL(CREATE_TABLE_FLOOR);
+
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMPLATE);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DETAIL_COLECTION);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUMMARY);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_COLLECTION);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_FLOOR);
+
             onCreate(db);
         }
 

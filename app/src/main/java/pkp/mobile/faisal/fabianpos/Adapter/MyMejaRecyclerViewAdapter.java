@@ -7,22 +7,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import pkp.mobile.faisal.fabianpos.Fragments.MejaFragment.OnListFragmentInteractionListener;
-import pkp.mobile.faisal.fabianpos.dummy.DummyContent.DummyItem;
 import pkp.mobile.faisal.fabianpos.R;
+import pkp.mobile.faisal.fabianpos.Models.TableModel;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link TableModel} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyMejaRecyclerViewAdapter extends RecyclerView.Adapter<MyMejaRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<TableModel> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyMejaRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyMejaRecyclerViewAdapter(List<TableModel> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +37,8 @@ public class MyMejaRecyclerViewAdapter extends RecyclerView.Adapter<MyMejaRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).getFloor_id());
+        holder.mContentView.setText(mValues.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +61,7 @@ public class MyMejaRecyclerViewAdapter extends RecyclerView.Adapter<MyMejaRecycl
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public TableModel mItem;
 
         public ViewHolder(View view) {
             super(view);

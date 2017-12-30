@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 
 import pkp.mobile.faisal.fabianpos.Adapter.MyMejaRecyclerViewAdapter;
 import pkp.mobile.faisal.fabianpos.R;
-import pkp.mobile.faisal.fabianpos.dummy.DummyContent;
-import pkp.mobile.faisal.fabianpos.dummy.DummyContent.DummyItem;
+import pkp.mobile.faisal.fabianpos.Sqlite.DBFloorHelper;
+import pkp.mobile.faisal.fabianpos.Sqlite.DBTableHelper;
+import pkp.mobile.faisal.fabianpos.Models.TableModel;
+
 
 /**
  * A fragment representing a list of Items.
@@ -69,7 +71,11 @@ public class MejaFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMejaRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            DBFloorHelper floor = new DBFloorHelper(getContext());
+            DBTableHelper table = new DBTableHelper(getContext());
+
+            recyclerView.setAdapter(new MyMejaRecyclerViewAdapter(table.getAll(), mListener));
         }
         return view;
     }
@@ -104,6 +110,6 @@ public class MejaFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(TableModel item);
     }
 }

@@ -1,30 +1,33 @@
-package pkp.mobile.faisal.fabianpos.Fragments;
+package pkp.mobile.faisal.fabianpos.FragmentMasters;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import pkp.mobile.faisal.fabianpos.Adapter.PagerAdapter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import pkp.mobile.faisal.fabianpos.Adapter.MasterFloorAdapter;
+import pkp.mobile.faisal.fabianpos.Models.FloorModel;
 import pkp.mobile.faisal.fabianpos.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MasterDataFragment.OnFragmentInteractionListener} interface
+ * {@link MasterFloorsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MasterDataFragment#newInstance} factory method to
+ * Use the {@link MasterFloorsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MasterDataFragment extends Fragment {
+public class MasterFloorsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,7 +39,14 @@ public class MasterDataFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public MasterDataFragment() {
+
+    private RecyclerView.Adapter mAdapter;
+    private ArrayList<FloorModel> taskListBase = new ArrayList<>();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Context context;
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+    public MasterFloorsFragment() {
         // Required empty public constructor
     }
 
@@ -46,78 +56,16 @@ public class MasterDataFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MasterDataFragment.
+     * @return A new instance of fragment MasterFloorFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MasterDataFragment newInstance(String param1, String param2) {
-        MasterDataFragment fragment = new MasterDataFragment();
+    public static MasterFloorsFragment newInstance(String param1, String param2) {
+        MasterFloorsFragment fragment = new MasterFloorsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private void makeTabLayout(final View view) {
-        final Context context = getContext();
-
-        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter(
-                getActivity().getSupportFragmentManager(), context);
-
-        final TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabTextColors(Color.RED, Color.WHITE); // set the tab text colors for the both states of the tab.
-        ColorStateList colorStateList = tabLayout.getTabTextColors();
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                viewPager.setCurrentItem(position, false);
-                tabLayout.getTabAt(position).select();
-                Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-
-//                switch (position) {
-//                    case 0:
-//                        toolbar.setTitle(context.getString(R.string.task_list));
-//                        break;
-//                    case 1:
-//                        toolbar.setTitle(context.getString(R.string.upload_result));
-//                        break;
-//                    case 2:
-//                        toolbar.setTitle(context.getString(R.string.settlement));
-//                        break;
-//                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-
     }
 
     @Override
@@ -133,11 +81,27 @@ public class MasterDataFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_master_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_master_floor, container, false);
 
-        makeTabLayout(view);
+        makeCardView(view);
 
         return view;
+    }
+
+    private void makeCardView(final View view) {
+
+        taskListBase.add(new FloorModel(1, "floor 1"));
+        taskListBase.add(new FloorModel(1, "floor 2"));
+        taskListBase.add(new FloorModel(1, "floor 3"));
+        taskListBase.add(new FloorModel(1, "floor 4"));
+        taskListBase.add(new FloorModel(1, "floor 5"));
+
+        RecyclerView mRecyclerView = view.findViewById(R.id.rv_floor);
+        mRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayout.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new MasterFloorAdapter(taskListBase);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
